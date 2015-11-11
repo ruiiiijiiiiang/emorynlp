@@ -33,13 +33,13 @@ import edu.emory.mathcs.nlp.emorynlp.component.node.NLPNode;
 /**
  * @author Jinho D. Choi ({@code jinho.choi@emory.edu})
  */
-public class AmbiguityClassMap implements Serializable
+public class NERAmbiguityClassMap implements Serializable
 {
 	private static final long serialVersionUID = 3515412091681651812L;
 	private Map<String,List<String>> ambiguity_class;
 	private Bigram<String,String> pos_count;
 	
-	public AmbiguityClassMap()
+	public NERAmbiguityClassMap()
 	{
 		ambiguity_class = new HashMap<>();
 		pos_count = new Bigram<>();

@@ -29,7 +29,7 @@ import edu.emory.mathcs.nlp.emorynlp.ner.NERConfig;
 import edu.emory.mathcs.nlp.emorynlp.ner.NERState;
 import edu.emory.mathcs.nlp.emorynlp.ner.NERTagger;
 import edu.emory.mathcs.nlp.emorynlp.ner.features.NERFeatureTemplate0;
-import edu.emory.mathcs.nlp.emorynlp.pos.AmbiguityClassMap;
+import edu.emory.mathcs.nlp.emorynlp.ner.NERAmbiguityClassMap;
 
 /**
  * @author Jinho D. Choi ({@code jinho.choi@emory.edu})
@@ -55,7 +55,7 @@ public class NERTrain extends NLPOnlineTrain<NLPNode,NERState<NLPNode>>
 		initComponentSingleModel(component, inputFiles);
 		
 		NERConfig dbpediaConfig = new NERConfig(IOUtils.createFileInputStream(dbpediaConfigFile));
-		AmbiguityClassMap map = createAmbiguityClasseMap(dbpediaConfig, inputFiles);
+		NERAmbiguityClassMap map = createAmbiguityClasseMap(dbpediaConfig, inputFiles);
 		((NERTagger<NLPNode>)component).setAmbiguityClassMap(map);
 	}
 	
@@ -75,10 +75,10 @@ public class NERTrain extends NLPOnlineTrain<NLPNode,NERState<NLPNode>>
 		return new NLPNode();
 	}
 	
-	protected AmbiguityClassMap createAmbiguityClasseMap(NLPConfig<NLPNode> configuration, List<String> inputFiles)
+	protected NERAmbiguityClassMap createAmbiguityClasseMap(NLPConfig<NLPNode> configuration, List<String> inputFiles)
 	{
 		BinUtils.LOG.info("Collecting lexicons:\n");
-		AmbiguityClassMap ac = new AmbiguityClassMap();
+		NERAmbiguityClassMap ac = new NERAmbiguityClassMap();
 		NERConfig config = (NERConfig)configuration;
 		
 		iterate(configuration.getTSVReader(), inputFiles, nodes -> ac.add(nodes));

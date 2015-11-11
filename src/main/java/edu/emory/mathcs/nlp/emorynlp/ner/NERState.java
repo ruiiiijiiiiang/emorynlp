@@ -22,7 +22,7 @@ import edu.emory.mathcs.nlp.emorynlp.component.eval.F1Eval;
 import edu.emory.mathcs.nlp.emorynlp.component.node.NLPNode;
 import edu.emory.mathcs.nlp.emorynlp.component.state.L2RState;
 import edu.emory.mathcs.nlp.emorynlp.component.util.BILOU;
-import edu.emory.mathcs.nlp.emorynlp.pos.AmbiguityClassMap;
+import edu.emory.mathcs.nlp.emorynlp.ner.NERAmbiguityClassMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 
 /**
@@ -30,9 +30,9 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
  */
 public class NERState<N extends NLPNode> extends L2RState<N>
 {
-	private AmbiguityClassMap ambiguity_class_map;
+	private NERAmbiguityClassMap ambiguity_class_map;
 	
-	public NERState(N[] nodes, AmbiguityClassMap map)
+	public NERState(N[] nodes, NERAmbiguityClassMap map)
 	{
 		super(nodes);
 		setAmbiguityClass(map);
@@ -79,7 +79,7 @@ public class NERState<N extends NLPNode> extends L2RState<N>
 		return ambiguity_class_map.get(node);
 	}
 	
-	public void setAmbiguityClass(AmbiguityClassMap map)
+	public void setAmbiguityClass(NERAmbiguityClassMap map)
 	{
 		ambiguity_class_map = map;		
 	}
