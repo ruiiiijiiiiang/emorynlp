@@ -37,12 +37,12 @@ public class NERAmbiguityClassMap implements Serializable
 {
 	private static final long serialVersionUID = 3515412091681651812L;
 	private Map<String,List<String>> ambiguity_class;
-	private Bigram<String,String> pos_count;
+	private Bigram<String,String> ner_count;
 	
 	public NERAmbiguityClassMap()
 	{
 		ambiguity_class = new HashMap<>();
-		pos_count = new Bigram<>();
+		ner_count = new Bigram<>();
 	}
 	
 	public void add(NLPNode[] nodes)
@@ -52,14 +52,21 @@ public class NERAmbiguityClassMap implements Serializable
 	
 	public void add(NLPNode node)
 	{
-		pos_count.add(toKey(node), node.getPartOfSpeechTag());
+		String namentType = node.getNamedEntityType();
+		if (namentType != null) {
+			String[] types = namentType.split(" ");
+			for (String s : types){
+				ner_count.add(toKey(node), s);
+			}
+
+		}
 	}
 	
 	public void expand(double threshold)
 	{
 		List<ObjectDoublePair<String>> ngram;
 		
-		for (Entry<String,Unigram<String>> e : pos_count.entrySet())
+		for (Entry<String,Unigram<String>> e : ner_count.entrySet())
 		{
 			ngram = e.getValue().toList(threshold);
 			if (ngram.isEmpty()) continue;
@@ -76,7 +83,7 @@ public class NERAmbiguityClassMap implements Serializable
 				ambiguity_class.put(e.getKey(), ngram.stream().map(u -> u.o).collect(Collectors.toList()));
 		}
 		
-		pos_count = new Bigram<>();
+		ner_count = new Bigram<>();
 	}
 	
 	/** @return the ambiguity class of the word-form. */

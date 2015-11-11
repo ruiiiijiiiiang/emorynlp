@@ -152,6 +152,11 @@ public class NLPNode implements Serializable, Comparable<NLPNode>
 		return nament_tag;
 	}
 	
+	public String getNamedEntityType()
+	{
+		return nament_type;
+	}
+	
 	public FeatMap getFeatMap()
 	{
 		return feat_map;
