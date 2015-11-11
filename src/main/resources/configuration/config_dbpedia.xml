@@ -1,0 +1,9 @@
+<configuration>
+    <language>english</language>
+	<tsv>
+        <column index="0" field="form"/>
+        <column index="1" field="netype"/>
+    </tsv>
+    
+	<ambiguity_class_threshold>0.4</ambiguity_class_threshold>
+</configuration>

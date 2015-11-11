@@ -37,6 +37,7 @@ public interface ConfigXML
 	String FIELD_FEATS 	= "feats";
 	String FIELD_DHEAD	= "dhead";
 	String FIELD_DEPREL	= "deprel";
+	String FIELD_NETYPE	= "netype";
 	String FIELD_SHEADS	= "sheads";
 	String FIELD_NAMENT	= "nament";
 	String FIELD_COREF	= "coref";

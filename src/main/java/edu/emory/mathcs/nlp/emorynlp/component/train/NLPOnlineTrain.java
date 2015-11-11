@@ -65,6 +65,8 @@ public abstract class NLPOnlineTrain<N extends NLPNode,S extends NLPState<N>>
 	public int feature_template = 0;
 	@Option(name="-m", usage="model file (optional)", required=false, metaVar="<filename>")
 	public String model_file = null;
+	@Option(name="-a", usage="ambiguity class (optional)", required=false, metaVar="<filepath>")
+	public String ambiguity_path = null;
 	
 	public NLPOnlineTrain() {};
 	
@@ -110,7 +112,12 @@ public abstract class NLPOnlineTrain<N extends NLPNode,S extends NLPState<N>>
 		List<String> trainFiles   = FileUtils.getFileList(train_path  , train_ext);
 		List<String> developFiles = FileUtils.getFileList(develop_path, develop_ext);
 		NLPOnlineComponent<N,S> component = createComponent(IOUtils.createFileInputStream(configuration_file));
-		initComponent(component, trainFiles);
+		if (ambiguity_path != null) {
+			List<String> ambiguityClass = FileUtils.getFileList(ambiguity_path, "*");
+			initComponent(component, ambiguityClass);
+		} else {
+			initComponent(component, trainFiles);
+		}
 		train(trainFiles, developFiles, component);
 		if (model_file != null) save(component);
 	}

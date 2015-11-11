@@ -44,6 +44,7 @@ public class TSVReader
 	public int feats;
 	public int dhead;
 	public int deprel;
+	public int netype;
 	
 	public void open(InputStream in)
 	{
@@ -107,10 +108,11 @@ public class TSVReader
 		String  l = (lemma  >= 0) ? values[lemma]  : null;
 		String  p = (pos    >= 0) ? values[pos]    : null;
 		String  n = (nament >= 0) ? values[nament] : null;
+		String  e = (netype >= 0) ? values[netype] : null;
 		FeatMap t = (feats  >= 0) ? new FeatMap(values[feats]) : new FeatMap();
 		
 		N node = supplier.get();
-		node.set(id, f, l, p, n, t, null, null);
+		node.set(id, f, l, p, n, t, null, null, e);
 		return node;
 	}
 	

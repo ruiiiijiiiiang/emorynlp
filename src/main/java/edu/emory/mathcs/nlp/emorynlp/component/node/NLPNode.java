@@ -55,6 +55,7 @@ public class NLPNode implements Serializable, Comparable<NLPNode>
 	protected String       lemma;
 	protected String       pos_tag;
 	protected String       nament_tag;
+	protected String       nament_type;
 	protected FeatMap      feat_map;
 	protected String       dependency_label;
 	protected NLPNode      dependency_head;
@@ -69,35 +70,35 @@ public class NLPNode implements Serializable, Comparable<NLPNode>
 	
 	public NLPNode(int id, String form)
 	{
-		set(id, form, null, null, null, new FeatMap(), null, null);
+		set(id, form, null, null, null, new FeatMap(), null, null, null);
 	}
 	
 	public NLPNode(int id, String form, String tag)
 	{
-		set(id, form, null, null, null, new FeatMap(), null, null);
+		set(id, form, null, null, null, new FeatMap(), null, null, null);
 	}
 	
 	public NLPNode(int id, String form, String lemma, String posTag, FeatMap feats)
 	{
-		set(id, form, lemma, posTag, null, feats, null, null);
+		set(id, form, lemma, posTag, null, feats, null, null, null);
 	}
 	
 	public NLPNode(int id, String form, String lemma, String posTag, String namentTag, FeatMap feats)
 	{
-		set(id, form, lemma, posTag, namentTag, feats, null, null);
+		set(id, form, lemma, posTag, namentTag, feats, null, null, null);
 	}
 	
 	public NLPNode(int id, String form, String lemma, String posTag, FeatMap feats, NLPNode dhead, String deprel)
 	{
-		set(id, form, lemma, posTag, null, feats, dhead, deprel);
+		set(id, form, lemma, posTag, null, feats, dhead, deprel, null);
 	}
 	
 	public NLPNode(int id, String form, String lemma, String posTag, String namentTag, FeatMap feats, NLPNode dhead, String deprel)
 	{
-		set(id, form, lemma, posTag, namentTag, feats, dhead, deprel);
+		set(id, form, lemma, posTag, namentTag, feats, dhead, deprel, null);
 	}
 	
-	public void set(int id, String form, String lemma, String posTag, String namentTag, FeatMap feats, NLPNode dhead, String deprel)
+	public void set(int id, String form, String lemma, String posTag, String namentTag, FeatMap feats, NLPNode dhead, String deprel, String namentType)
 	{
 		setID(id);
 		setWordForm(form);
@@ -107,6 +108,7 @@ public class NLPNode implements Serializable, Comparable<NLPNode>
 		setFeatMap(feats);
 		setDependencyHead(dhead);
 		setDependencyLabel(deprel);
+		setNamedEntityType(namentType);
 		
 		dependent_list = new SortedArrayList<>();
 		semantic_heads = new ArrayList<>();
@@ -114,7 +116,7 @@ public class NLPNode implements Serializable, Comparable<NLPNode>
 	
 	public void setToRoot()
 	{
-		set(0, ROOT_TAG, ROOT_TAG, ROOT_TAG, ROOT_TAG, new FeatMap(), null, null);
+		set(0, ROOT_TAG, ROOT_TAG, ROOT_TAG, ROOT_TAG, new FeatMap(), null, null, null);
 	}
 	
 //	============================== GETTERS ==============================
@@ -217,6 +219,11 @@ public class NLPNode implements Serializable, Comparable<NLPNode>
 	public void setNamedEntityTag(String tag)
 	{
 		nament_tag = tag;
+	}
+	
+	public void setNamedEntityType(String type)
+	{
+		nament_type = type;
 	}
 	
 //	============================== BOOLEANS ==============================

@@ -18,19 +18,26 @@ package edu.emory.mathcs.nlp.bin;
 import java.io.InputStream;
 import java.util.List;
 
+import edu.emory.mathcs.nlp.common.util.BinUtils;
+import edu.emory.mathcs.nlp.common.util.IOUtils;
 import edu.emory.mathcs.nlp.emorynlp.component.NLPOnlineComponent;
+import edu.emory.mathcs.nlp.emorynlp.component.config.NLPConfig;
 import edu.emory.mathcs.nlp.emorynlp.component.feature.FeatureTemplate;
 import edu.emory.mathcs.nlp.emorynlp.component.node.NLPNode;
 import edu.emory.mathcs.nlp.emorynlp.component.train.NLPOnlineTrain;
+import edu.emory.mathcs.nlp.emorynlp.ner.NERConfig;
 import edu.emory.mathcs.nlp.emorynlp.ner.NERState;
 import edu.emory.mathcs.nlp.emorynlp.ner.NERTagger;
 import edu.emory.mathcs.nlp.emorynlp.ner.features.NERFeatureTemplate0;
+import edu.emory.mathcs.nlp.emorynlp.pos.AmbiguityClassMap;
 
 /**
  * @author Jinho D. Choi ({@code jinho.choi@emory.edu})
  */
 public class NERTrain extends NLPOnlineTrain<NLPNode,NERState<NLPNode>>
 {
+	private String dbpediaConfigFile = "/home/rui/workspace/emorynlp/src/main/resources/configuration/config_dbpedia.xml";
+	
 	public NERTrain(String[] args)
 	{
 		super(args);
@@ -46,6 +53,10 @@ public class NERTrain extends NLPOnlineTrain<NLPNode,NERState<NLPNode>>
 	protected void initComponent(NLPOnlineComponent<NLPNode,NERState<NLPNode>> component, List<String> inputFiles)
 	{
 		initComponentSingleModel(component, inputFiles);
+		
+		NERConfig dbpediaConfig = new NERConfig(IOUtils.createFileInputStream(dbpediaConfigFile));
+		AmbiguityClassMap map = createAmbiguityClasseMap(dbpediaConfig, inputFiles);
+		((NERTagger<NLPNode>)component).setAmbiguityClassMap(map);
 	}
 	
 	@Override
@@ -62,6 +73,19 @@ public class NERTrain extends NLPOnlineTrain<NLPNode,NERState<NLPNode>>
 	protected NLPNode createNode()
 	{
 		return new NLPNode();
+	}
+	
+	protected AmbiguityClassMap createAmbiguityClasseMap(NLPConfig<NLPNode> configuration, List<String> inputFiles)
+	{
+		BinUtils.LOG.info("Collecting lexicons:\n");
+		AmbiguityClassMap ac = new AmbiguityClassMap();
+		NERConfig config = (NERConfig)configuration;
+		
+		iterate(configuration.getTSVReader(), inputFiles, nodes -> ac.add(nodes));
+		ac.expand(config.getAmbiguityClassThreshold());
+		
+		BinUtils.LOG.info(String.format("- # of ambiguity classes: %d\n", ac.size()));
+		return ac;
 	}
 	
 	static public void main(String[] args)

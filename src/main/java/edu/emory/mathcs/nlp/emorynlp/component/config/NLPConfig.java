@@ -77,6 +77,7 @@ public abstract class NLPConfig<N extends NLPNode> implements ConfigXML
 		reader.feats  = map.getOrDefault(FIELD_FEATS , -1);
 		reader.dhead  = map.getOrDefault(FIELD_DHEAD , -1);
 		reader.deprel = map.getOrDefault(FIELD_DEPREL, -1);
+		reader.netype = map.getOrDefault(FIELD_NETYPE, -1);
 		
 		return reader;
 	}
