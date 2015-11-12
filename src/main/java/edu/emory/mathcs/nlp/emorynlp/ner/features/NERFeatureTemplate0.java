@@ -114,6 +114,7 @@ public class NERFeatureTemplate0<N extends NLPNode> extends NERFeatureTemplate<N
 		add(new FeatureItem<>(2, Field.named_entity_tag));
 		add(new FeatureItem<>(3, Field.named_entity_tag));
 
+/*
 		//double fields
 		add(new FeatureItem<>(-2, Field.word_form), new FeatureItem<>(-3, Field.word_form));
 		add(new FeatureItem<>(-1, Field.word_form), new FeatureItem<>(-2, Field.word_form));
@@ -129,7 +130,6 @@ public class NERFeatureTemplate0<N extends NLPNode> extends NERFeatureTemplate<N
 		add(new FeatureItem<>(2, Field.part_of_speech_tag), new FeatureItem<>(1, Field.part_of_speech_tag));
 		add(new FeatureItem<>(3, Field.part_of_speech_tag), new FeatureItem<>(2, Field.part_of_speech_tag));
 
-/*
 		add(new FeatureItem<>(-2, Field.named_entity_tag), new FeatureItem<>(-3, Field.named_entity_tag));
 		add(new FeatureItem<>(-1, Field.named_entity_tag), new FeatureItem<>(-2, Field.named_entity_tag));
 		add(new FeatureItem<>(0, Field.named_entity_tag), new FeatureItem<>(-1, Field.named_entity_tag));
